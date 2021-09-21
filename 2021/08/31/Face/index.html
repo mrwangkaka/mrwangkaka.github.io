@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="https://mrwangkaka.github.io">
   <title>面经 | Blogs of KaKaWang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="大部分都是copy的，资源附在连接上">
+  <meta name="description" content="大部分都是copy的，资源附在连接上 Spring ​    谈谈你对Spring的理解 ​    SpringIOC加载过程 ​        Application和BeanFactory ​        Bean的生命周期 ​    SpringAOP ​        JDK动态代理和CGLIB动态代理的区别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面经">
 <meta property="og:url" content="https://mrwangkaka.github.io/2021/08/31/Face/index.html">
 <meta property="og:site_name" content="Blogs of KaKaWang">
-<meta property="og:description" content="大部分都是copy的，资源附在连接上">
+<meta property="og:description" content="大部分都是copy的，资源附在连接上 Spring ​    谈谈你对Spring的理解 ​    SpringIOC加载过程 ​        Application和BeanFactory ​        Bean的生命周期 ​    SpringAOP ​        JDK动态代理和CGLIB动态代理的区别">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-09-21T11:50:16.163Z">
+<meta property="article:modified_time" content="2021-09-21T13:05:25.713Z">
 <meta property="article:author" content="KaKaWang">
 <meta name="twitter:card" content="summary">
   
@@ -175,6 +175,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>大部分都是copy的，资源附在连接上</p>
+<p><a href="#Spring">Spring</a></p>
+<p>​    <a href="##%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9Spring%E7%9A%84%E7%90%86%E8%A7%A3">谈谈你对Spring的理解</a></p>
+<p>​    <a href="##SpringIOC%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B">SpringIOC加载过程</a></p>
+<p>​        <a href="###Application%E5%92%8CBeanFactory">Application和BeanFactory</a></p>
+<p>​        <a href="###Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">Bean的生命周期</a></p>
+<p>​    <a href="##SpringAOP">SpringAOP</a></p>
+<p>​        <a href="###JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCGLIB%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB">JDK动态代理和CGLIB动态代理的区别</a></p>
 <span id="more"></span>
 
 <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><p>参照于此<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1t44y1C73F?p=3">https://www.bilibili.com/video/BV1t44y1C73F?p=3</a></p>
@@ -241,7 +248,7 @@
 </ol>
 </li>
 </ul>
-<h2 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h2><ol>
+<h3 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h3><ol>
 <li><p>实例化</p>
 <ol>
 <li><p>直接反射：benaClass.newInstance()，由Spring控制实例化过程</p>
@@ -252,7 +259,45 @@
 </li>
 </ol>
 </li>
+<li><p>属性注入（DI   @Autowired、@Value）</p>
+<ol>
+<li><p>会出现循环依赖（A依赖B，B依赖A）</p>
+<p>解决：三级缓存</p>
+<ul>
+<li><p>引申出来一些问题</p>
+<p>二级缓存能不能解决循环依赖</p>
+<p>Spring怎么避免并发获取到不完整的Bean</p>
+<p>构造函数中参数的循环依赖Spring有没有解决</p>
+<p>多例Bean Spring有没有解决</p>
+</li>
+</ul>
+</li>
 </ol>
+</li>
+<li><p>初始化阶段</p>
+<p>先调用BeanPostProcessor对外的Before接口</p>
+<p>在初始化</p>
+<p>在调用BeanPostProcessor对外的After接口</p>
+<p>Bean生命周期回调 </p>
+<p>调用初始化方法</p>
+<ul>
+<li>初始化方法init-method</li>
+<li>@Bean（initMethod=“foo”）</li>
+<li>初始化方法上标注 @PostConstruct()</li>
+<li>类上实现initializingBean接口</li>
+</ul>
+<p>aware接口</p>
+</li>
+<li><p>销毁</p>
+<ol>
+<li>preDestroy注解标注的方法</li>
+<li>DisposableBean接口的destroy方法</li>
+<li>配置的destroy-method</li>
+</ol>
+</li>
+</ol>
+<p>BeanProcessor  对外扩展，对内解耦</p>
+<p>AOP就是用在后置接口解耦的</p>
 <h2 id="SpringAOP"><a href="#SpringAOP" class="headerlink" title="SpringAOP"></a>SpringAOP</h2><h3 id="JDK动态代理和CGLIB动态代理的区别"><a href="#JDK动态代理和CGLIB动态代理的区别" class="headerlink" title="JDK动态代理和CGLIB动态代理的区别"></a>JDK动态代理和CGLIB动态代理的区别</h3><p>首先需要了解静态代理</p>
 <p>代理模式的作用：控制访问和功能增强；</p>
 <p>但是静态代理缺点很明显</p>
