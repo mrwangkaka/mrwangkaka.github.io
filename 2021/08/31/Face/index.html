@@ -16,7 +16,7 @@
 <meta property="og:description" content="大部分都是copy的，资源附在连接上">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-03T02:47:35.755Z">
+<meta property="article:modified_time" content="2021-10-03T03:34:49.352Z">
 <meta property="article:author" content="KaKaWang">
 <meta name="twitter:card" content="summary">
   
@@ -197,6 +197,7 @@
 <p>​            <a href="#Application%E5%92%8CBeanFactory">Application和BeanFactory</a></p>
 <p>​            <a href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">Bean的生命周期</a></p>
 <p>​    <a href="#SpringAOP">SpringAOP</a></p>
+<p>​        <a href="#%E5%AF%B9AOP%E7%9A%84%E7%90%86%E8%A7%A3">对AOP的理解</a></p>
 <p>​        <a href="#JDK%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8CCGLIB%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB">JDK动态代理和CGLIB动态代理的区别</a></p>
 <h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><h3 id="线程的生命周期和状态"><a href="#线程的生命周期和状态" class="headerlink" title="线程的生命周期和状态"></a>线程的生命周期和状态</h3><p>线程通常由五种状态：创建，就绪，运行，阻塞和死亡</p>
 <p>阻塞通常分为三种：等待阻塞，同步阻塞和其他阻塞</p>
@@ -299,7 +300,16 @@
 </ul>
 <h2 id="SpringIOC"><a href="#SpringIOC" class="headerlink" title="SpringIOC"></a>SpringIOC</h2><h3 id="什么是Spring-IOC容器？有什么作用"><a href="#什么是Spring-IOC容器？有什么作用" class="headerlink" title="什么是Spring IOC容器？有什么作用"></a>什么是Spring IOC容器？有什么作用</h3><p>Spring IoC负责创建对象、管理对象（通过依赖注入（DI）、装配对象、配置对象，并且管理这些对象的整个生命周期。</p>
 <p>UserService userService = new UserService()//原本的创建方式，耦合度太高，维护不方便</p>
-<p>引入IOC 九江创建对象的控制权交给Spring的IOC，以前由程序员自己控制的对象创建，现在交给Spring的IOC去创建，</p>
+<blockquote>
+<p>怎么降低耦合的呢？</p>
+<p>例如：</p>
+<p>一开始使用创建的是Dog dog = new Dog()，如果我们想换成猫，则需要将所有的Dog改成Cat</p>
+<p>如果使用接口，我们就需要将所有的new Dog 改成 new Cat</p>
+<p>如果使用工厂模式去创建，我们只需要参数dog改成cat</p>
+<p>如果使用反射，我们只需要修改配置文件</p>
+<p>而ioc的实现机制就是工厂模式+反射</p>
+</blockquote>
+<p>引入IOC 就将创建对象的控制权交给Spring的IOC，以前由程序员自己控制的对象创建，现在交给Spring的IOC去创建，</p>
 <p>如果要去使用对象需要通过DI，@Autowired就可以使用对象</p>
 <p>优点：</p>
 <ul>
@@ -324,7 +334,14 @@
 <p>即ApplicationContext是门面方法，而BeanFactory真正负责生产Bean，他们两个都可以作为容器</p>
 </li>
 <li><p>但是在开发中一般都是ApplicationContext而不是BeanFactory</p>
-<p>ApplicationContext提供的功能更加全面</p>
+<p>ApplicationContext提供的功能更加全面：</p>
+<ul>
+<li>继承MessageSource，因此支持国际化</li>
+<li>统一的访问资源文件访问方式</li>
+<li>提供在监视器中注册bean的事件</li>
+<li>同时加载多个配置文件</li>
+<li>载入多个（有继承关系）上下文，使得每一个上下文都专注于特定的层</li>
+</ul>
 <p>ApplicationContext作为容器的辅助功能</p>
 <ol>
 <li><p><strong>初始化 Context 前的准备工作，例如对系统属性和环境变量进行准备以及验证等。</strong></p>
@@ -410,7 +427,20 @@
 </ol>
 <p>BeanProcessor  对外扩展，对内解耦</p>
 <p>AOP就是用在后置接口解耦的</p>
-<h2 id="SpringAOP"><a href="#SpringAOP" class="headerlink" title="SpringAOP"></a>SpringAOP</h2><h3 id="JDK动态代理和CGLIB动态代理的区别"><a href="#JDK动态代理和CGLIB动态代理的区别" class="headerlink" title="JDK动态代理和CGLIB动态代理的区别"></a>JDK动态代理和CGLIB动态代理的区别</h3><p>首先需要了解静态代理</p>
+<h2 id="SpringAOP"><a href="#SpringAOP" class="headerlink" title="SpringAOP"></a>SpringAOP</h2><h2 id="对AOP的理解"><a href="#对AOP的理解" class="headerlink" title="对AOP的理解"></a>对AOP的理解</h2><p>系统是由许多不同的组件组成的，每一个组件负责一个特定功能。除了实现自己的核心的功能，还要额外承担其他职责。例如日志，事务管理和安全，这些就被称为横切关注点，因为他会跨越多个组件。</p>
+<p>当我们需要为分散的对象引入公共行为，OOP显得无能为力，在OOP设计中，它存在着大量代码的重复，不利于各个模块的重用</p>
+<p>AOP：</p>
+<ul>
+<li><p>面向切面编程，就是将交叉业务逻辑封装成切面，利用AOP的功能将切面织入到主业务逻辑中。所谓交叉业务逻辑是指，通用的，与主业务逻辑无关的代码，如安全检查，事物，日志等。若不使用AOP，则会出现代码纠缠，即交叉业务逻辑与主业务逻辑混合在一起。这样，会使业务逻辑变得混杂不清。</p>
+</li>
+<li><p>AOP的好处：</p>
+<ul>
+<li>每个事物逻辑位于一个位置，代码不分散，便于维护和升级</li>
+<li>业务模块更简洁，只包含核心业务代码</li>
+</ul>
+</li>
+</ul>
+<h3 id="JDK动态代理和CGLIB动态代理的区别"><a href="#JDK动态代理和CGLIB动态代理的区别" class="headerlink" title="JDK动态代理和CGLIB动态代理的区别"></a>JDK动态代理和CGLIB动态代理的区别</h3><p>首先需要了解静态代理</p>
 <p>代理模式的作用：控制访问和功能增强；</p>
 <p>但是静态代理缺点很明显</p>
 <ol>
