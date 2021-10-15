@@ -16,7 +16,7 @@
 <meta property="og:description" content="大部分都是copy的，资源附在连接上">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-10-03T03:34:49.352Z">
+<meta property="article:modified_time" content="2021-10-14T07:54:45.952Z">
 <meta property="article:author" content="KaKaWang">
 <meta name="twitter:card" content="summary">
   
@@ -378,7 +378,9 @@
 </li>
 </ul>
 <h4 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h4><ol>
-<li><p>实例化</p>
+<li><blockquote>
+<p>实例化</p>
+</blockquote>
 <ol>
 <li><p>直接反射：benaClass.newInstance()，由Spring控制实例化过程</p>
 <p>自己去控制Spring实例化：代理对象</p>
@@ -388,7 +390,9 @@
 </li>
 </ol>
 </li>
-<li><p>属性注入（DI   @Autowired、@Value）</p>
+<li><blockquote>
+<p>属性注入（DI   @Autowired、@Value）</p>
+</blockquote>
 <ol>
 <li><p>会出现循环依赖（A依赖B，B依赖A）</p>
 <p>解决：三级缓存</p>
@@ -403,7 +407,9 @@
 </li>
 </ol>
 </li>
-<li><p>初始化阶段</p>
+<li><blockquote>
+<p>初始化阶段</p>
+</blockquote>
 <p>先调用BeanPostProcessor对外的Before接口</p>
 <p>在初始化</p>
 <p>在调用BeanPostProcessor对外的After接口</p>
@@ -417,7 +423,9 @@
 </ul>
 <p>aware接口</p>
 </li>
-<li><p>销毁</p>
+<li><blockquote>
+<p>销毁</p>
+</blockquote>
 <ol>
 <li>preDestroy注解标注的方法</li>
 <li>DisposableBean接口的destroy方法</li>
@@ -458,6 +466,11 @@
 </li>
 <li><p>CGLIB动态代理</p>
 </li>
+</ul>
+<h1 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h1><h2 id="SpringMVC的拦截器和过滤器有什么区别la"><a href="#SpringMVC的拦截器和过滤器有什么区别la" class="headerlink" title="SpringMVC的拦截器和过滤器有什么区别la"></a>SpringMVC的拦截器和过滤器有什么区别la</h2><ul>
+<li>拦截器是SpringMVC的，过滤器是servle的</li>
+<li>拦截器只controller中的方法进行拦截，而过滤器几乎对所有的请求起作用</li>
+<li>拦截器可以访问Spring容器，过滤器不能</li>
 </ul>
 
       
